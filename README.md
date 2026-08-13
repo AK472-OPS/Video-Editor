@@ -1,62 +1,69 @@
-# 🚀 Video Editor — Node.js, FFmpeg, Cpeak & Cluster
+# 🎬 Video Editor — Node.js, Cpeak, FFmpeg & Cluster
 
-![Language](https://img.shields.io/badge/Language-JavaScript-yellow)
-![Runtime](https://img.shields.io/badge/Runtime-Node.js-green)
-![Video Processing](https://img.shields.io/badge/Video-FFmpeg-blue)
-![Metadata](https://img.shields.io/badge/Metadata-FFprobe-orange)
-![Architecture](https://img.shields.io/badge/Architecture-Cluster-purple)
-![Status](https://img.shields.io/badge/Project-Completed-success)
+A web-based **Video Processing and Editing application** built using **Node.js**, a custom HTTP framework called **Cpeak**, **FFmpeg**, **FFprobe**, **Node.js Cluster**, a custom **Job Queue**, and a **file-based database**.
 
-A backend-driven **Video Editor application built with Node.js**, using a custom HTTP framework called **Cpeak**, **FFmpeg/FFprobe** for video processing, a **file-based database**, and **Node.js Cluster** for process-level parallelism.
-
-The application provides functionality for:
-
-* User authentication
-* User profile management
-* Video upload
-* Video listing
-* Automatic thumbnail generation
-* Video dimension detection
-* Audio extraction
-* Video resizing
-* Video asset serving
-* Background resize job processing
-* Resize progress tracking
-* Multi-process execution using Node.js Cluster
+The application provides user authentication, video uploading, video listing, thumbnail generation, video metadata extraction, audio extraction, video resizing, video asset serving, and multi-process execution using Node.js Cluster.
 
 ---
 
-# 📚 Table of Contents
+## ⭐ Project Highlights
 
-* [Project Overview](#-project-overview)
-* [Key Highlights](#-key-highlights)
-* [Technologies Used](#️-technologies-used)
-* [Features](#-features)
-* [Project Structure](#-project-structure)
-* [System Architecture](#-system-architecture)
-* [Application Architecture](#-application-architecture)
-* [Request Lifecycle](#-request-lifecycle)
-* [Authentication Flow](#-authentication-flow)
-* [Video Upload Flow](#-video-upload-flow)
-* [Video Processing Pipeline](#-video-processing-pipeline)
-* [Video Resize Flow](#-video-resize-flow)
-* [Job Queue Architecture](#-job-queue-architecture)
-* [Cluster Architecture](#-cluster-architecture)
-* [FFmpeg & FFprobe Integration](#-ffmpeg--ffprobe-integration)
-* [Database Architecture](#-database-architecture)
-* [Storage Architecture](#-storage-architecture)
-* [API Endpoints](#-api-endpoints)
-* [Project Files](#-project-files)
-* [Installation](#-installation)
-* [Running the Application](#-running-the-application)
-* [Cluster Mode](#-cluster-mode)
-* [Sample Workflow](#-sample-workflow)
-* [Error Handling](#-error-handling)
-* [Supported Video Formats](#-supported-video-formats)
-* [Current Limitations](#️-current-limitations)
-* [Future Improvements](#-future-improvements)
-* [Learning Outcomes](#-learning-outcomes)
-* [Author](#-author)
+- 🚀 Node.js backend
+- 🌐 Custom Cpeak HTTP framework
+- 🔀 Custom routing and middleware
+- 🔐 User authentication and session management
+- 🍪 Cookie-based authentication
+- 📤 Video upload using Node.js streams
+- 🎞️ FFmpeg video processing
+- 🔍 FFprobe video metadata extraction
+- 🖼️ Automatic thumbnail generation
+- 📐 Video dimension detection
+- 🎵 Audio extraction
+- 📏 Video resizing
+- 📊 Resize progress tracking
+- 📦 Custom in-memory Job Queue
+- ⚙️ Node.js Cluster support
+- 👷 Multiple worker processes
+- 💾 File-based database
+- 📁 File-system based media storage
+- 📡 Video asset serving
+- 🖥️ HTML/CSS/JavaScript frontend
+
+---
+
+# 📖 Table of Contents
+
+- [Project Overview](#-project-overview)
+- [Features](#-features)
+- [Technologies Used](#️-technologies-used)
+- [Project Structure](#-project-structure)
+- [System Architecture](#-system-architecture)
+- [Application Architecture](#-application-architecture)
+- [Request Lifecycle](#-request-lifecycle)
+- [Authentication Flow](#-authentication-flow)
+- [Video Upload Flow](#-video-upload-flow)
+- [Video Processing Pipeline](#-video-processing-pipeline)
+- [FFmpeg and FFprobe](#-ffmpeg-and-ffprobe)
+- [Audio Extraction](#-audio-extraction)
+- [Video Resize](#-video-resize)
+- [Job Queue](#-job-queue)
+- [Cluster Architecture](#️-cluster-architecture)
+- [Process Isolation](#-process-isolation)
+- [Database Architecture](#️-database-architecture)
+- [Storage Architecture](#-storage-architecture)
+- [API Endpoints](#-api-endpoints)
+- [Cpeak Framework](#-cpeak-framework)
+- [Middleware Architecture](#-middleware-architecture)
+- [Error Handling](#️-error-handling)
+- [Supported Video Formats](#-supported-video-formats)
+- [Installation](#️-installation)
+- [Running the Application](#-running-the-application)
+- [Running in Cluster Mode](#-running-in-cluster-mode)
+- [Application Workflow](#-application-workflow)
+- [Current Limitations](#️-current-limitations)
+- [Future Improvements](#-future-improvements)
+- [Learning Outcomes](#-learning-outcomes)
+- [Author](#-author)
 
 ---
 
@@ -64,92 +71,83 @@ The application provides functionality for:
 
 This project is a web-based video processing application developed using **Node.js**.
 
-The backend handles user authentication, video uploads, video metadata, video assets, audio extraction, and video resizing.
+The backend handles:
 
-Instead of using Express, the application uses a custom HTTP framework called **Cpeak**, located inside the `towrong` directory.
+- User authentication
+- User sessions
+- Video uploads
+- Video metadata
+- Video listing
+- Thumbnail generation
+- Audio extraction
+- Video resizing
+- Video asset serving
 
-The application also integrates **FFmpeg** and **FFprobe** as external video-processing tools.
+Instead of using Express, the project uses a custom HTTP framework called **Cpeak**, located inside the `towrong/` directory.
 
-FFmpeg is used for operations such as:
+The project integrates **FFmpeg** and **FFprobe** as external media-processing tools.
 
-* Generating thumbnails
-* Extracting audio
-* Resizing videos
+### FFmpeg is used for:
 
-FFprobe is used for obtaining:
+- Thumbnail generation
+- Audio extraction
+- Video resizing
 
-* Video width
-* Video height
-* Video duration
+### FFprobe is used for:
 
-The application stores application data in local files under the `data/` directory and stores uploaded and processed media under the `storage/` directory.
+- Video width detection
+- Video height detection
+- Video duration detection
 
----
-
-# ⭐ Key Highlights
-
-* Node.js backend
-* Custom Cpeak HTTP framework
-* Middleware-based request processing
-* Authentication using session tokens
-* Cookie-based authentication
-* File-based database
-* Video upload using streams
-* FFmpeg integration
-* FFprobe integration
-* Automatic thumbnail generation
-* Video dimension detection
-* Audio extraction
-* Video resizing
-* Resize progress tracking
-* Job queue for resize operations
-* Node.js Cluster support
-* Automatic worker replacement after worker failure
-* Static frontend serving
-* REST-style API routes
-
----
-
-# 🛠️ Technologies Used
-
-| Technology              | Purpose                      |
-| ----------------------- | ---------------------------- |
-| **Node.js**             | Backend runtime              |
-| **JavaScript**          | Application development      |
-| **Cpeak**               | Custom HTTP server/framework |
-| **FFmpeg**              | Video processing             |
-| **FFprobe**             | Video metadata extraction    |
-| **Node.js Cluster**     | Multi-process execution      |
-| **Node.js Streams**     | Video file upload/download   |
-| **File System API**     | File storage and database    |
-| **Nodemon**             | Development server restart   |
-| **HTML/CSS/JavaScript** | Frontend                     |
+Application data is stored inside the `data/` directory, while uploaded and processed media files are stored inside `storage/`.
 
 ---
 
 # ✨ Features
 
-| Feature                   | Status |
-| ------------------------- | ------ |
-| User Login                | ✅      |
-| User Logout               | ✅      |
-| User Information          | ✅      |
-| Update User               | ✅      |
-| Video Upload              | ✅      |
-| Video Listing             | ✅      |
-| Thumbnail Generation      | ✅      |
-| Video Dimension Detection | ✅      |
-| Audio Extraction          | ✅      |
-| Video Resize              | ✅      |
-| Resize Progress Tracking  | ✅      |
-| Video Asset Serving       | ✅      |
-| Session Management        | ✅      |
-| File-Based Database       | ✅      |
-| FFmpeg Integration        | ✅      |
-| FFprobe Integration       | ✅      |
-| Job Queue                 | ✅      |
-| Node.js Cluster           | ✅      |
-| Static File Serving       | ✅      |
+| Feature | Status |
+|---|---|
+| User Login | ✅ |
+| User Logout | ✅ |
+| User Information | ✅ |
+| Update User | ✅ |
+| Session Management | ✅ |
+| Video Upload | ✅ |
+| Video Listing | ✅ |
+| Thumbnail Generation | ✅ |
+| Video Dimension Detection | ✅ |
+| Video Duration Detection | ✅ |
+| Audio Extraction | ✅ |
+| Video Resize | ✅ |
+| Resize Progress Tracking | ✅ |
+| Video Asset Serving | ✅ |
+| File-Based Database | ✅ |
+| FFmpeg Integration | ✅ |
+| FFprobe Integration | ✅ |
+| Job Queue | ✅ |
+| Node.js Cluster | ✅ |
+| Static File Serving | ✅ |
+| Middleware | ✅ |
+| Custom Routing | ✅ |
+
+---
+
+# 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| **Node.js** | Backend runtime |
+| **JavaScript** | Application development |
+| **Cpeak** | Custom HTTP framework |
+| **FFmpeg** | Video processing |
+| **FFprobe** | Video metadata extraction |
+| **Node.js Cluster** | Multi-process execution |
+| **Node.js Streams** | Video file upload and streaming |
+| **File System API** | Database and media storage |
+| **Nodemon** | Development workflow |
+| **HTML** | Frontend structure |
+| **CSS** | Frontend styling |
+| **JavaScript** | Frontend interaction |
 
 ---
 
@@ -169,6 +167,7 @@ Video Editor/
 │   └── styles.css
 │
 ├── src/
+│   │
 │   ├── controllers/
 │   │   ├── user.js
 │   │   └── video.js
@@ -205,13 +204,7 @@ Video Editor/
 ├── package.json
 ├── package-lock.json
 └── .gitignore
-```
-
----
-
-# 🏗️ System Architecture
-
-```text
+🏗️ System Architecture
                          ┌─────────────────────┐
                          │       Browser       │
                          │   Frontend Client   │
@@ -239,139 +232,78 @@ Video Editor/
                          │       Router        │
                          └──────────┬──────────┘
                                     │
-                     ┌──────────────┴──────────────┐
-                     │                             │
-                     ▼                             ▼
-             ┌───────────────┐             ┌───────────────┐
-             │ User Controller│             │Video Controller│
-             └───────┬───────┘             └───────┬───────┘
-                     │                             │
-                     ▼                             ▼
-              ┌────────────┐               ┌───────────────┐
-              │    DB      │               │    FFmpeg     │
-              │ File Store │               │   FFprobe     │
-              └────────────┘               └───────┬───────┘
-                                                    │
-                                                    ▼
-                                             ┌─────────────┐
-                                             │   Storage   │
-                                             │ Video Files │
-                                             └─────────────┘
-```
+                    ┌───────────────┴───────────────┐
+                    │                               │
+                    ▼                               ▼
+             ┌───────────────┐              ┌────────────────┐
+             │ User Controller│              │Video Controller│
+             └───────┬───────┘              └───────┬────────┘
+                     │                              │
+                     ▼                              ▼
+              ┌────────────┐               ┌────────────────┐
+              │ File-Based │               │ FFmpeg/FFprobe │
+              │     DB     │               └───────┬────────┘
+              └──────┬─────┘                       │
+                     │                             ▼
+                     ▼                       ┌────────────┐
+                  data/                      │  storage/  │
+                                             │   Media    │
+                                             └────────────┘
+🧩 Application Architecture
 
----
+The application is divided into logical components:
 
-# 🧩 Application Architecture
+                    Client
+                      │
+                      ▼
+               Cpeak HTTP Server
+                      │
+                      ▼
+                  Middleware
+                      │
+                      ▼
+                    Router
+                      │
+             ┌────────┴────────┐
+             │                 │
+             ▼                 ▼
+      User Controller    Video Controller
+             │                 │
+             ▼                 ▼
+        File-Based DB     FFmpeg / FFprobe
+             │                 │
+             ▼                 ▼
+           data/            storage/
+Main Components
+1. Cpeak
 
-The application is divided into several logical layers.
+Custom HTTP framework responsible for HTTP server functionality, routing, middleware, JSON parsing, static files, response helpers, and error handling.
 
-```text
-                  Client
-                    │
-                    ▼
-             Cpeak HTTP Server
-                    │
-                    ▼
-               Middleware
-                    │
-                    ▼
-                 Router
-                    │
-          ┌─────────┴─────────┐
-          │                   │
-          ▼                   ▼
-    User Controller      Video Controller
-          │                   │
-          ▼                   ▼
-       Database         FFmpeg / FFprobe
-          │                   │
-          ▼                   ▼
-       data/              storage/
-```
+2. Middleware
 
-### Main Components
+Handles:
 
-### 1. Cpeak
+Static files
+JSON parsing
+Authentication
+Frontend index serving
+3. Router
 
-Cpeak is the custom HTTP framework used by the project instead of Express.
+Maps HTTP methods and URLs to their respective handlers.
 
-It provides functionality such as:
+4. Controllers
 
-* HTTP server creation
-* Routing
-* Middleware
-* JSON parsing
-* Static file serving
-* Response helpers
-* Error handling
-* URL parameter extraction
+Two main controllers are used:
 
----
-
-### 2. Middleware
-
-The application registers middleware for:
-
-* Static file serving
-* JSON request parsing
-* Authentication
-* Serving `index.html` for selected frontend routes
-
----
-
-### 3. Router
-
-The router maps HTTP methods and paths to controllers.
-
-Example:
-
-```text
-POST   /api/login
-DELETE /api/logout
-GET    /api/user
-PUT    /api/user
-
-GET    /api/videos
-POST   /api/upload-video
-PUT    /api/video/resize
-PATCH  /api/video/extract-audio
-
-GET    /get-video-asset
-```
-
----
-
-### 4. Controllers
-
-Two main controller modules are present:
-
-```text
 controllers/
-│
 ├── user.js
 └── video.js
-```
 
-`user.js` handles:
+user.js handles user-related operations.
 
-* Login
-* Logout
-* User information
-* User updates
+video.js handles video-related operations.
 
-`video.js` handles:
-
-* Video listing
-* Upload
-* Resize
-* Audio extraction
-* Asset serving
-
----
-
-# 🔄 Request Lifecycle
-
-```text
+🔄 Request Lifecycle
 Browser
    │
    │ HTTP Request
@@ -396,7 +328,7 @@ Router
    ▼
 Controller
    │
-   ├──────────────► DB
+   ├──────────────► File-Based DB
    │
    ├──────────────► FFmpeg
    │
@@ -409,143 +341,59 @@ HTTP Response
    │
    ▼
 Browser
-```
+🔐 Authentication Flow
 
----
+The application uses session tokens and cookies for authentication.
 
-# 🔐 Authentication Flow
+                    User
+                     │
+                     ▼
+              POST /api/login
+                     │
+                     ▼
+             Validate Credentials
+                     │
+                ┌────┴────┐
+                │         │
+              Invalid    Valid
+                │         │
+                ▼         ▼
+              401       Generate Token
+                          │
+                          ▼
+                   Store Session
+                          │
+                          ▼
+                    Set Cookie
+                          │
+                          ▼
+                    Login Success
 
-The application uses a session-token-based authentication mechanism.
+For authenticated requests:
 
-```text
-             User
-              │
-              ▼
-       POST /api/login
-              │
-              ▼
-     Check Username/Password
-              │
-        ┌─────┴─────┐
-        │           │
-      Invalid      Valid
-        │           │
-        ▼           ▼
-      401        Generate Token
-                    │
-                    ▼
-             Store Session
-                    │
-                    ▼
-             Set Cookie
-                    │
-                    ▼
-              Login Success
-```
-
-The token is stored in the session data.
-
-For protected routes:
-
-```text
 Request
    │
    ▼
-Read Cookie
+Read Authentication Cookie
    │
    ▼
-Find Session Token
+Find Session
    │
    ├───────────────┐
    │               │
- Found           Not Found
+ Found          Not Found
    │               │
    ▼               ▼
-Set req.userId    401 Unauthorized
-   │
-   ▼
-Continue Request
-```
-
----
-
-# 👤 User Operations
-
-The project supports:
-
-### Login
-
-```text
-POST /api/login
-```
-
-The server:
-
-1. Reads username and password.
-2. Searches the users data.
-3. Validates the password.
-4. Generates a token.
-5. Stores the session.
-6. Sends the token through a cookie.
-
----
-
-### Logout
-
-```text
-DELETE /api/logout
-```
-
-The server:
-
-1. Finds the current user's session.
-2. Removes the session.
-3. Saves the updated database.
-4. Deletes the authentication cookie.
-
----
-
-### Get User Information
-
-```text
-GET /api/user
-```
-
-Returns the authenticated user's:
-
-* Username
-* Name
-
----
-
-### Update User
-
-```text
-PUT /api/user
-```
-
-Allows updating:
-
-* Username
-* Name
-* Password
-
-The password is updated only when a password value is provided.
-
----
-
-# 🎬 Video Upload Flow
-
-```text
+Continue       Unauthorized
+🎬 Video Upload Flow
 Browser
    │
    │ POST /api/upload-video
+   ▼
+Authentication / Request Handling
    │
    ▼
-Authentication
-   │
-   ▼
-Read Filename Header
+Read Filename
    │
    ▼
 Validate Extension
@@ -554,7 +402,7 @@ Validate Extension
 Generate Video ID
    │
    ▼
-Create Storage Directory
+Create Video Storage Directory
    │
    ▼
 Stream Uploaded Video
@@ -562,272 +410,150 @@ Stream Uploaded Video
    ▼
 Save Original Video
    │
-   ▼
-FFmpeg
+   ├──────────────► FFmpeg
+   │                    │
+   │                    ▼
+   │              Generate Thumbnail
    │
-   ├──────────────► Generate Thumbnail
-   │
-   ▼
-FFprobe
-   │
-   └──────────────► Get Dimensions
-   │
-   ▼
-Update Video Database
-   │
-   ▼
-Return Success Response
-```
-
----
-
-# 📹 Video Upload Processing
-
-When a video is uploaded, the server performs the following operations:
-
-### Step 1 — Read Filename
-
-The filename is read from the request header:
-
-```text
-filename
-```
-
-### Step 2 — Validate Format
-
-Supported extensions:
-
-```text
-mp4
-mkv
-avi
-mov
-flv
-wmv
-```
-
-### Step 3 — Generate Video ID
-
-A random video ID is generated using Node.js crypto utilities.
-
-### Step 4 — Create Storage Directory
-
-```text
-storage/<videoId>/
-```
-
-### Step 5 — Save Original Video
-
-```text
-original.<extension>
-```
-
-### Step 6 — Generate Thumbnail
-
-FFmpeg generates:
-
-```text
-thumbnail.jpg
-```
-
-### Step 7 — Detect Dimensions
-
-FFprobe obtains:
-
-```text
-width
-height
-```
-
-### Step 8 — Store Metadata
-
-The video information is stored in:
-
-```text
-data/videos
-```
-
----
-
-# 🎞️ Video Processing Pipeline
-
-```text
-                  Uploaded Video
-                         │
-                         ▼
-                ┌────────────────┐
-                │ Original Video │
-                └───────┬────────┘
+   └──────────────► FFprobe
                         │
-            ┌───────────┼───────────┐
-            │           │           │
-            ▼           ▼           ▼
-        FFmpeg       FFprobe     FFmpeg
-            │           │           │
-            ▼           ▼           ▼
-       Thumbnail    Dimensions   Audio
-            │                       │
-            │                       ▼
-            │                  audio.aac
-            │
-            ▼
-      thumbnail.jpg
-```
+                        ▼
+                 Extract Metadata
+                        │
+                        ▼
+                  Save Video Data
+🎞️ Video Processing Pipeline
+                    Uploaded Video
+                           │
+                           ▼
+                    Original Video
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+              ▼            ▼            ▼
+           FFmpeg       FFprobe       FFmpeg
+              │            │            │
+              ▼            ▼            ▼
+         Thumbnail     Dimensions     Audio
+              │                         │
+              ▼                         ▼
+       thumbnail.jpg                audio.aac
+🎥 FFmpeg and FFprobe
 
----
+The project uses:
 
-# 🎵 Audio Extraction
+ffmpeg-static
+ffprobe-static
 
-The project supports extracting audio from an uploaded video.
+FFmpeg and FFprobe are executed from Node.js using:
 
-Endpoint:
+child_process.spawn()
+FFmpeg Operations
+Thumbnail Generation
+makeThumbnail()
 
-```text
-PATCH /api/video/extract-audio
-```
+Flow:
 
-Processing:
+Video
+  │
+  ▼
+FFmpeg
+  │
+  ▼
+thumbnail.jpg
+Audio Extraction
+extractAudio()
 
-```text
+Flow:
+
 Original Video
       │
       ▼
     FFmpeg
       │
-      │ -vn
-      │ -c:a copy
       ▼
   audio.aac
-```
+Video Resizing
+resizeVideo()
 
-The project prevents audio extraction when the stored video metadata indicates that audio has already been extracted.
+FFmpeg is used to generate a resized video according to the requested width and height.
 
----
+FFprobe Operations
+Video Dimensions
+getDimenstions()
 
-# 📐 Video Resize Flow
+Used to obtain video width and height.
 
-Video resizing is handled through the job queue and cluster architecture.
+Video Duration
+getDuration()
 
-```text
-Browser
-   │
-   │ PUT /api/video/resize
-   ▼
-Video Controller
-   │
-   ▼
-Create Resize Entry
-   │
-   ▼
-Send Resize Job
-   │
-   ▼
-Cluster Primary
-   │
-   ▼
-Job Queue
-   │
-   ▼
-Execute Resize Job
-   │
-   ▼
-FFmpeg
-   │
-   ▼
-Generate Resized Video
-   │
-   ▼
-Update Progress
-   │
-   ▼
-Update Database
-```
+Used to obtain video duration.
 
----
+🎵 Audio Extraction
 
-# 📦 Job Queue Architecture
+Endpoint:
 
-The project contains a custom `JobQueue` implementation.
+PATCH /api/video/extract-audio
 
-```text
+Processing flow:
+
+Original Video
+      │
+      ▼
+    FFmpeg
+      │
+      ▼
+  audio.aac
+      │
+      ▼
+Storage
+📐 Video Resize
+
+Endpoint:
+
+PUT /api/video/resize
+
+The resize request contains:
+
+videoId
+width
+height
+
+The resize architecture is designed around the Job Queue and Cluster.
+
+Client
+  │
+  ▼
 Resize Request
-      │
-      ▼
-Create Job
-      │
-      ▼
-JobQueue.enqueue()
-      │
-      ▼
-Jobs Array
-      │
-      ▼
-JobQueue.dequeue()
-      │
-      ▼
-executeNext()
-      │
-      ▼
-execute()
-      │
-      ▼
-FFmpeg Resize
-      │
-      ▼
-Update Progress
-      │
-      ▼
-Mark Job Complete
-      │
-      ▼
-Execute Next Job
-```
+  │
+  ▼
+Video Controller
+  │
+  ▼
+Resize Message
+  │
+  ▼
+Cluster Primary
+  │
+  ▼
+JobQueue
+  │
+  ▼
+Resize Job
+  │
+  ▼
+FFmpeg
+  │
+  ▼
+Resized Video
+📊 Resize Progress Tracking
 
-The queue maintains:
+During FFmpeg processing, progress information is read from FFmpeg output.
 
-```text
-jobs
-currentJob
-```
-
-The queue processes one current job at a time within its instance.
-
----
-
-# 📊 Resize Progress Tracking
-
-During FFmpeg execution, the application reads FFmpeg's progress information from `stderr`.
-
-```text
-FFmpeg Output
-      │
-      ▼
-Read time=
-      │
-      ▼
-Calculate Current Time
-      │
-      ▼
-Calculate Percentage
-      │
-      ▼
-Update Database
-      │
-      ▼
-Store:
-"0%"
-"25%"
-"50%"
-"75%"
-...
-"100%"
-```
-
-The resize status is stored under the corresponding resolution in the video's `resizes` object.
+The processing status is maintained for the requested resolution.
 
 Example:
 
-```json
 {
   "resizes": {
     "640x360": {
@@ -835,53 +561,107 @@ Example:
     }
   }
 }
-```
 
----
+The progress value represents the current processing state for the selected resize operation.
 
-# ⚙️ Cluster Architecture
+📦 Job Queue
+
+The project contains a custom in-memory JobQueue implementation.
+
+Location:
+
+src/lib/JobQueue.js
+
+The queue maintains:
+
+Pending Jobs
+Current Job
+
+Resize jobs contain:
+
+videoId
+width
+height
+Queue Flow
+Resize Request
+      │
+      ▼
+Create Resize Job
+      │
+      ▼
+JobQueue
+      │
+      ▼
+Queue Job
+      │
+      ▼
+Resize Processing
+      │
+      ▼
+FFmpeg
+      │
+      ▼
+Progress Update
+
+The queue is implemented in memory and is intended for the current project architecture.
+
+⚙️ Cluster Architecture
 
 The project supports Node.js Cluster mode through:
 
-```text
 src/cluster.js
-```
 
 Architecture:
 
-```text
                     ┌──────────────────┐
                     │  Primary Process │
+                    │    cluster.js    │
                     └────────┬─────────┘
                              │
-              ┌──────────────┼──────────────┐
-              │              │              │
-              ▼              ▼              ▼
-          Worker 1       Worker 2       Worker 3
-              │              │              │
-              └──────────────┼──────────────┘
+               ┌─────────────┼─────────────┐
+               │             │             │
+               ▼             ▼             ▼
+           Worker 1      Worker 2      Worker 3
+               │             │             │
+               └─────────────┼─────────────┘
                              │
-                        HTTP Server
-```
+                             ▼
+                       HTTP Server
 
 The primary process:
 
-1. Creates the `JobQueue`.
-2. Determines available parallelism.
-3. Forks worker processes.
-4. Receives resize messages from workers.
-5. Adds resize jobs to the queue.
-6. Replaces workers that exit.
+Determines available parallelism.
+Creates worker processes.
+Coordinates resize messages.
+Maintains the Job Queue.
+Replaces workers when they exit.
+🔁 Resize Job Communication
 
----
+In cluster mode, the worker sends a resize message to the primary process.
 
-# 🔒 Process Isolation
+Worker
+   │
+   │ process.send()
+   │
+   │ messageType = "new-resize"
+   ▼
+Primary Process
+   │
+   ▼
+JobQueue.enqueue()
+   │
+   ▼
+Resize Job
+
+The resize message contains:
+
+videoId
+width
+height
+🔒 Process Isolation
 
 Node.js Cluster creates separate worker processes.
 
-Conceptually:
-
-```text
 Primary Process
       │
       ├── Worker Process
@@ -891,202 +671,64 @@ Primary Process
       ├── Worker Process
       │
       └── Worker Process
-```
 
-Each worker runs the application server through:
+Each worker runs the application server.
 
-```text
-src/index.js
-```
+The primary process is responsible for coordination while worker processes handle HTTP requests.
 
-The primary process is responsible for coordination while workers handle HTTP requests.
+🧯 Worker Failure Handling
 
----
+The cluster listens for worker exit events.
 
-# 🔁 Resize Job Communication
-
-The resize request is passed from the worker toward the primary process.
-
-```text
-Worker
-  │
-  │ messageType = "new-resize"
-  │
-  ▼
-Primary Process
-  │
-  ▼
-JobQueue.enqueue()
-  │
-  ▼
-Resize Job
-```
-
-The job contains:
-
-```text
-videoId
-width
-height
-```
-
----
-
-# 🧯 Worker Failure Handling
-
-The cluster implementation listens for worker exit events.
-
-```text
 Worker Process
       │
       ▼
 Worker Exits
       │
       ▼
-Cluster detects exit
+Cluster Detects Exit
       │
       ▼
 cluster.fork()
       │
       ▼
 New Worker Created
-```
 
-This allows the cluster to replace an exited worker.
+This allows an exited worker to be replaced.
 
----
+🗃️ Database Architecture
 
-# 🎥 FFmpeg & FFprobe Integration
+The project uses a simple file-based database implemented in:
 
-The project uses:
-
-```text
-ffmpeg-static
-ffprobe-static
-```
-
-FFmpeg is invoked using Node.js:
-
-```text
-child_process.spawn()
-```
-
----
-
-## FFmpeg Operations
-
-The project contains functions for:
-
-### Thumbnail Generation
-
-```text
-makeThumbnail()
-```
-
-### Audio Extraction
-
-```text
-extractAudio()
-```
-
-### Video Resizing
-
-```text
-resizeVideo()
-```
-
----
-
-## FFprobe Operations
-
-The project uses FFprobe for:
-
-### Video Dimensions
-
-```text
-getDimenstions()
-```
-
-### Video Duration
-
-```text
-getDuration()
-```
-
----
-
-# 🖼 Thumbnail Generation
-
-The thumbnail is generated using FFmpeg from the uploaded video.
-
-```text
-Video
- │
- ▼
-FFmpeg
- │
- │ Select frame
- ▼
-thumbnail.jpg
-```
-
-The thumbnail is stored inside the video's storage directory.
-
----
-
-# 🗃️ Database Architecture
-
-The project uses a simple **file-based database** implemented in:
-
-```text
 src/DB.js
-```
 
-Three data files are maintained:
+The database maintains three files:
 
-```text
 data/
-│
 ├── users
 ├── sessions
 └── videos
-```
+👤 Users Data
 
-The database is loaded using Node.js file-system operations.
+The users data contains information such as:
 
----
-
-# 👥 Users Data
-
-The `data/users` file stores user information such as:
-
-```text
 id
 name
 username
 password
-```
+🔑 Sessions Data
 
----
+The sessions data contains:
 
-# 🔑 Sessions Data
-
-The `data/sessions` file stores:
-
-```text
 userId
 token
-```
 
-This is used by the authentication middleware to identify logged-in users.
+Sessions are used by the authentication system.
 
----
+🎬 Videos Data
 
-# 🎬 Videos Data
+The videos data contains metadata such as:
 
-The `data/videos` file stores metadata such as:
-
-```text
 id
 videoId
 name
@@ -1095,176 +737,128 @@ dimensions
 userId
 extractedAudio
 resizes
-```
+💾 Database Operations
 
----
+The database provides operations for updating and saving data.
 
-# 💾 Database Operations
-
-The database class provides:
-
-```text
 update()
 save()
-```
+update()
 
-### update()
+Loads the latest data from:
 
-Reads the latest contents from:
-
-```text
 data/users
 data/sessions
 data/videos
-```
+save()
 
-### save()
+Writes updated data back to the corresponding files.
 
-Writes the updated data back to the same files.
-
----
-
-# 📁 Storage Architecture
+📁 Storage Architecture
 
 Uploaded and processed media are stored under:
 
-```text
 storage/
-```
 
-Each video gets its own directory.
+Each video has its own directory.
 
 Example:
 
-```text
 storage/
-└── 1ef94f33/
+└── <videoId>/
     ├── original.mp4
     ├── thumbnail.jpg
     ├── audio.aac
     └── 640x360.mp4
-```
+📡 Video Asset Serving
 
----
+Endpoint:
 
-# 📡 Video Asset Serving
-
-The application provides:
-
-```text
 GET /get-video-asset
-```
 
-The controller can serve different types of assets including:
+The application can serve:
 
-```text
-thumbnail
-audio
-resize
-original
-```
+Original Video
+Thumbnail
+Audio
+Resized Video
 
-The server sets appropriate response headers such as:
+The server uses appropriate response headers such as:
 
-```text
 Content-Type
 Content-Length
 Content-Disposition
-```
 
-and streams the file to the client.
+and streams the requested file to the client.
 
----
+🌐 API Endpoints
+Authentication & User APIs
+Method	Endpoint	Purpose
+POST	/api/login	Login user
+DELETE	/api/logout	Logout user
+GET	/api/user	Get current user information
+PUT	/api/user	Update user information
+Video APIs
+Method	Endpoint	Purpose
+GET	/api/videos	Get videos
+POST	/api/upload-video	Upload video
+PUT	/api/video/resize	Request video resize
+PATCH	/api/video/extract-audio	Extract audio
+GET	/get-video-asset	Retrieve video assets
+🧭 Frontend Routes
 
-# 🌐 API Endpoints
+The frontend is served from:
 
-## Authentication & User APIs
+public/
 
-| Method | Endpoint      | Purpose                      |
-| ------ | ------------- | ---------------------------- |
-| POST   | `/api/login`  | Login user                   |
-| DELETE | `/api/logout` | Logout user                  |
-| GET    | `/api/user`   | Get current user information |
-| PUT    | `/api/user`   | Update user information      |
+The application provides frontend routes including:
 
----
-
-## Video APIs
-
-| Method | Endpoint                   | Purpose                          |
-| ------ | -------------------------- | -------------------------------- |
-| GET    | `/api/videos`              | Get videos belonging to the user |
-| POST   | `/api/upload-video`        | Upload a video                   |
-| PUT    | `/api/video/resize`        | Request video resize             |
-| PATCH  | `/api/video/extract-audio` | Extract audio                    |
-| GET    | `/get-video-asset`         | Retrieve video-related assets    |
-
----
-
-# 🧭 Frontend Routes
-
-The middleware serves `index.html` for:
-
-```text
 GET /
 GET /login
 GET /profile
-```
 
-Static frontend files are served from:
+Static frontend files include:
 
-```text
-public/
-```
-
----
-
-# 🧱 Cpeak Framework
+index.html
+scripts.js
+styles.css
+🧱 Cpeak Framework
 
 The project contains a custom HTTP framework inside:
 
-```text
 towrong/
-```
 
 The framework source is written in TypeScript.
 
 Important files include:
 
-```text
 towrong/
 │
 ├── lib/
 │   ├── index.ts
 │   └── types.ts
 │
-├── test/
 ├── dist/
+├── test/
 ├── package.json
 └── tsconfig.json
-```
 
 Cpeak provides functionality such as:
 
-* HTTP server creation
-* Route registration
-* Middleware
-* Route middleware
-* JSON parsing
-* Static file serving
-* File sending
-* Redirects
-* JSON responses
-* Status codes
-* URL variable extraction
-* Query parameter parsing
-* Error handling
-
----
-
-# 🔀 Cpeak Routing Flow
-
-```text
+HTTP server creation
+Route registration
+Middleware
+Route middleware
+JSON parsing
+Static file serving
+File sending
+Redirects
+JSON responses
+Status codes
+URL variable extraction
+Query parameter parsing
+Error handling
+🔀 Cpeak Routing Flow
 Incoming Request
        │
        ▼
@@ -1274,13 +868,7 @@ Cpeak HTTP Server
 Global Middleware
        │
        ▼
-Find HTTP Method
-       │
-       ▼
-Match Route Regex
-       │
-       ▼
-Extract URL Variables
+Route Matching
        │
        ▼
 Route Middleware
@@ -1289,41 +877,34 @@ Route Middleware
 Route Handler
        │
        ▼
-Response
-```
+Controller
+       │
+       ▼
+HTTP Response
+🧩 Middleware Architecture
 
----
+The application uses middleware for:
 
-# 🧩 Middleware Architecture
-
-The application registers middleware in `src/index.js`.
-
-```text
 Request
-  │
-  ▼
-serveStatic()
-  │
-  ▼
-parseJSON
-  │
-  ▼
-authenticate()
-  │
-  ▼
-serverIndex()
-  │
-  ▼
+   │
+   ▼
+Static File Serving
+   │
+   ▼
+JSON Parsing
+   │
+   ▼
+Authentication
+   │
+   ▼
+Frontend Index Handling
+   │
+   ▼
 Router
-```
+⚠️ Error Handling
 
----
+The application contains centralized error handling.
 
-# ⚠️ Error Handling
-
-The application registers a centralized error handler.
-
-```text
 Error
   │
   ▼
@@ -1334,38 +915,90 @@ Cpeak Error Handler
 Known Error    Unknown Error
   │               │
   ▼               ▼
-Use Status     HTTP 500
-Code
-  │
-  ▼
-JSON Response
-```
+Status Code     HTTP 500
+  │               │
+  └───────┬───────┘
+          ▼
+     JSON Response
 
-Known errors containing a status are returned with that status code.
+Unexpected server errors are handled through the HTTP error handling mechanism.
 
-Unexpected errors result in an HTTP 500 response.
+📦 Supported Video Formats
 
----
+The upload controller accepts the following extensions:
 
-# 🔄 Complete Video Processing Workflow
+.mp4
+.mkv
+.avi
+.mov
+.flv
+.wmv
 
-```text
+The file extension is extracted from the uploaded filename and validated before processing.
+
+🔧 Installation
+1. Clone the Repository
+git clone <YOUR-GITHUB-REPOSITORY-URL>
+2. Open the Project
+cd <PROJECT-DIRECTORY>
+3. Install Dependencies
+npm install
+▶️ Running the Application
+
+Start the normal server:
+
+npm start
+
+The application uses port:
+
+8060
+
+Open:
+
+http://localhost:8060
+⚡ Running in Cluster Mode
+
+To run the project using Node.js Cluster:
+
+npm run cluster
+
+This starts:
+
+src/cluster.js
+
+The cluster creates worker processes according to the available parallelism.
+
+🧪 Available Scripts
+
+The project provides the following npm scripts:
+
+npm start
+npm run cluster
+npm test
+
+npm start runs the normal application server.
+
+npm run cluster starts the cluster architecture.
+
+The current test script is a placeholder and is not configured as the application's automated test suite.
+
+🖥️ Complete Application Workflow
                          USER
                           │
                           ▼
-                    Login / Session
+                   Login / Session
                           │
                           ▼
-                   Upload Video
+                    Upload Video
                           │
                           ▼
-                 Validate File Type
+                  Validate Format
                           │
                           ▼
-                  Generate Video ID
+                   Generate Video ID
                           │
                           ▼
-                  Save Original File
+                  Save Original Video
                           │
                 ┌─────────┴─────────┐
                 │                   │
@@ -1373,11 +1006,11 @@ Unexpected errors result in an HTTP 500 response.
              FFmpeg              FFprobe
                 │                   │
                 ▼                   ▼
-           Thumbnail            Dimensions
+           Thumbnail            Metadata
                 │                   │
                 └─────────┬─────────┘
                           ▼
-                    Save Metadata
+                    Save Video Data
                           │
               ┌───────────┴────────────┐
               │                        │
@@ -1385,414 +1018,214 @@ Unexpected errors result in an HTTP 500 response.
         Extract Audio             Resize Video
               │                        │
               ▼                        ▼
-          audio.aac              Job Queue
+          audio.aac                 JobQueue
                                        │
                                        ▼
-                                  FFmpeg Resize
+                                    FFmpeg
                                        │
                                        ▼
-                                  Progress Update
+                                Processing Status
                                        │
                                        ▼
-                                  Save Result
-```
+                                  Storage
+🏛️ High-Level Design
+                ┌─────────────────────────┐
+                │        Frontend         │
+                │ HTML / CSS / JavaScript │
+                └────────────┬────────────┘
+                             │
+                             ▼
+                    ┌────────────────┐
+                    │     Cpeak      │
+                    │  HTTP Server   │
+                    └───────┬────────┘
+                            │
+                            ▼
+                       Middleware
+                            │
+                            ▼
+                         Router
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+              ▼                           ▼
+       User Controller             Video Controller
+              │                           │
+              ▼                           ▼
+         File-Based DB             FFmpeg / FFprobe
+              │                           │
+              ▼                           ▼
+           data/                       storage/
+⚠️ Current Limitations
+
+The current implementation has some limitations:
+
+Uses a file-based database instead of a production database.
+Session information is stored in local files.
+The Job Queue is an in-memory queue.
+The project is intended as a project/learning implementation rather than a production deployment.
+The current npm test script is not configured as a complete application test suite.
+Resize requests use cluster process communication through process.send() in the cluster architecture.
+Media storage is local rather than object storage.
+🚀 Future Improvements
+
+Possible future improvements include:
+
+PostgreSQL or MongoDB
+Redis-backed Job Queue
+Secure password hashing
+Stronger authentication/session management
+Cloud/object storage
+Distributed video-processing workers
+Docker deployment
+Reverse proxy
+Rate limiting
+Better input validation
+Persistent job state
+Job retry mechanism
+Job cancellation
+Real-time processing updates
+Production logging
+Monitoring and metrics
+Horizontal scaling
+Automated testing
+Improved error recovery
+🎯 Learning Outcomes
+
+This project demonstrates practical experience with:
+
+Node.js
+HTTP servers
+Custom HTTP framework development
+Cpeak
+Middleware architecture
+Routing
+REST-style APIs
+Authentication
+Cookies and sessions
+Node.js Streams
+File-system operations
+FFmpeg
+FFprobe
+Child processes
+Video processing
+Job queues
+Node.js Cluster
+Process isolation
+Multi-process architecture
+Error handling
+File-based data persistence
+🧠 Core Technical Concepts
+Node.js
+
+Used as the backend runtime for HTTP requests, file operations, process management, and asynchronous operations.
+
+Cpeak
+
+Custom HTTP framework responsible for the application's HTTP server, routing, middleware, JSON handling, static files, and response handling.
+
+FFmpeg
+
+Used as the actual media-processing engine.
+
+FFprobe
 
----
+Used for extracting video metadata.
 
-# ▶️ Installation
+Child Processes
 
-## 1. Clone the Repository
+FFmpeg and FFprobe are executed as external processes using Node.js spawn().
 
-```bash
-git clone <your-repository-url>
-```
+Job Queue
 
-## 2. Enter the Project Directory
+Used to organize resize jobs in the current architecture.
 
-```bash
-cd "Video Editor"
-```
+Node.js Cluster
 
-## 3. Install Dependencies
+Used to create multiple worker processes and coordinate processing-related communication.
 
-```bash
-npm install
-```
-
-The project uses:
-
-```text
-ffmpeg-static
-ffprobe-static
-nodemon
-```
-
----
-
-# ▶️ Running the Application
-
-Start the normal development server:
-
-```bash
-npm start
-```
-
-The application starts on:
-
-```text
-http://localhost:8060
-```
-
-The port is defined in:
-
-```text
-src/index.js
-```
-
-as:
-
-```text
-8060
-```
-
----
-
-# ⚡ Running in Cluster Mode
-
-The project provides a separate cluster script:
-
-```bash
-npm run cluster
-```
-
-This starts:
-
-```text
-src/cluster.js
-```
-
-The cluster determines the available parallelism and creates worker processes accordingly.
-
----
-
-# 🧪 Development
-
-The project uses **Nodemon** for development.
-
-The package scripts are:
-
-```text
-npm start
-npm run cluster
-npm test
-```
-
-The current `npm test` script in `package.json` is a placeholder that exits with:
-
-```text
-Error: no test specified
-```
-
----
-
-# 🖥️ Sample Application Workflow
-
-```text
-1. Open the application
-          │
-          ▼
-2. Login
-          │
-          ▼
-3. Authentication Cookie Created
-          │
-          ▼
-4. Upload Video
-          │
-          ▼
-5. Thumbnail Generated
-          │
-          ▼
-6. Video Dimensions Detected
-          │
-          ▼
-7. Video Appears in User's Video List
-          │
-          ▼
-8. Extract Audio OR Resize Video
-          │
-          ▼
-9. Processed Asset Stored
-          │
-          ▼
-10. Asset Can Be Retrieved
-```
-
----
-
-# 📦 Supported Video Formats
-
-The upload controller currently accepts:
-
-```text
-MP4
-MKV
-AVI
-MOV
-FLV
-WMV
-```
-
-The extension is extracted from the uploaded filename and validated before processing.
-
----
-
-# ⚠️ Current Limitations
-
-The current implementation has several limitations:
-
-* Uses a file-based database instead of a production database.
-* Authentication uses simple session tokens stored in files.
-* Passwords are stored directly in the users data file.
-* The JobQueue is an in-memory queue.
-* Resize jobs are handled by the queue instance in the cluster primary process.
-* The project is designed primarily as a learning/project implementation rather than a production deployment.
-* The current `npm test` command is not configured to execute the framework tests.
-* The resize endpoint communicates with the cluster through `process.send()`.
-
----
-
-# 🚀 Future Improvements
-
-Possible improvements for a production-ready version include:
-
-* PostgreSQL or MongoDB instead of file-based storage
-* Redis-backed job queue
-* Secure password hashing
-* JWT or stronger session management
-* Object storage for videos
-* Distributed video-processing workers
-* Docker deployment
-* Reverse proxy
-* Rate limiting
-* Input validation
-* Better authentication security
-* Persistent job state
-* Job retry mechanism
-* Job cancellation
-* Real-time processing updates
-* Production logging
-* Monitoring and metrics
-* Horizontal scaling
-* Better error recovery
-* Automated testing for the main application
-
----
-
-# 🎯 Learning Outcomes
-
-This project provides practical experience with:
-
-* Node.js
-* HTTP servers
-* Custom web framework development
-* Middleware architecture
-* Routing
-* REST-style APIs
-* Authentication
-* Cookies and sessions
-* File-system operations
-* Node.js streams
-* FFmpeg
-* FFprobe
-* Child processes
-* Video processing
-* Job queues
-* Process isolation
-* Node.js Cluster
-* Multi-process architecture
-* Error handling
-* File-based data persistence
-
----
-
-# 🧠 Important Technical Concepts
-
-This project demonstrates several important backend and system-level concepts.
-
-### Node.js
-
-Used as the backend runtime for handling HTTP requests, file operations, processes, and asynchronous operations.
-
-### Cpeak
-
-A custom HTTP framework used to implement:
-
-* Routing
-* Middleware
-* Request/response handling
-* Static files
-* JSON parsing
-* Error handling
-
-### FFmpeg
-
-Used as the actual video-processing engine.
-
-### FFprobe
-
-Used to inspect video metadata.
-
-### Child Process
-
-Node.js `spawn()` is used to execute FFmpeg and FFprobe as separate processes.
-
-### Job Queue
-
-Used to organize resize jobs before execution.
-
-### Cluster
-
-Used to create multiple Node.js worker processes.
-
-### File System
+File System
 
 Used for:
 
-* Database persistence
-* Video storage
-* Audio storage
-* Thumbnail storage
-* Resized video storage
+Database persistence
+Original video storage
+Thumbnail storage
+Audio storage
+Resized video storage
+📌 Why This Project Is Interesting
 
----
+The project combines multiple backend and system-level concepts in a single application:
 
-# 🏛️ High-Level Architecture Summary
-
-```text
-                         ┌──────────────────────┐
-                         │      Frontend        │
-                         │ HTML/CSS/JavaScript  │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │       Cpeak          │
-                         │   HTTP Framework     │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │     Middleware       │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │       Router         │
-                         └──────────┬───────────┘
-                                    │
-                    ┌───────────────┴───────────────┐
-                    │                               │
-                    ▼                               ▼
-            ┌──────────────┐                ┌──────────────┐
-            │ User         │                │ Video        │
-            │ Controller   │                │ Controller   │
-            └──────┬───────┘                └──────┬───────┘
-                   │                               │
-                   ▼                               ▼
-              ┌─────────┐                 ┌────────────────┐
-              │   DB    │                 │ FFmpeg/FFprobe │
-              └────┬────┘                 └───────┬────────┘
-                   │                              │
-                   ▼                              ▼
-              data/                          storage/
-```
-
----
-
-# 🔍 Project Design Summary
-
-```text
-                Presentation Layer
-                       │
-                       ▼
-                public/index.html
-                public/scripts.js
-                public/styles.css
-                       │
-                       ▼
-                  HTTP Layer
-                       │
-                       ▼
-                    Cpeak
-                       │
-                       ▼
-                 Middleware
-                       │
-                       ▼
-                  Router Layer
-                       │
-             ┌─────────┴─────────┐
-             ▼                   ▼
-       User Controller     Video Controller
-             │                   │
-             ▼                   ▼
-            DB             FFmpeg / FFprobe
-             │                   │
-             ▼                   ▼
-         data files           storage files
-```
-
----
-
-# 👨‍💻 Author
-
-**Akhil Kumar Singh**
-
-**B.Tech (Computer Science Engineering)**
-
-### Skills Demonstrated
-
-* JavaScript
-* Node.js
-* Backend Development
-* HTTP Server Development
-* Custom Framework Development
-* Cpeak
-* FFmpeg
-* FFprobe
-* Node.js Cluster
-* Job Queue
-* File System
-* REST APIs
-* Authentication
-* Video Processing
-* System Design
-
----
-
-# 🤝 Support
-
-If you found this project useful or learned something from it, please consider giving it a ⭐ on GitHub. Your support helps improve the project and motivates future enhancements.
-
----
-
-# ⭐ Project Highlights
-
-```text
 Node.js
-   +
-Custom Cpeak HTTP Framework
-   +
-FFmpeg / FFprobe
-   +
+    +
+Custom HTTP Framework
+    +
+Middleware
+    +
+Routing
+    +
+Authentication
+    +
 File-Based Database
-   +
+    +
+Streams
+    +
+FFmpeg / FFprobe
+    +
 Job Queue
-   +
+    +
 Node.js Cluster
-   +
+    +
 Video Processing
-   =
-Complete Video Processing Backend
-```
+    │
+    ▼
+🎬 Video Editor
+
+This makes the project useful for understanding how a backend application can integrate HTTP handling, file processing, external processes, background jobs, and multi-process execution.
+
+👨‍💻 Author
+
+Akhil Kumar Singh
+
+B.Tech — Computer Science Engineering
+
+Technologies & Concepts
+JavaScript
+Node.js
+Cpeak
+FFmpeg
+FFprobe
+Node.js Cluster
+Job Queue
+File System
+REST APIs
+Authentication
+Video Processing
+Backend Development
+System Design
+⭐ Support
+
+If you found this project useful or interesting, consider giving the repository a ⭐ on GitHub!
+
+Your support is appreciated and motivates further development.
+
+⭐ Project Summary
+             Node.js
+                +
+       Custom Cpeak Framework
+                +
+          FFmpeg / FFprobe
+                +
+       File-Based Database
+                +
+           Job Queue
+                +
+        Node.js Cluster
+                +
+        Video Processing
+                │
+                ▼
+        🎬 Video Editor
+
+
