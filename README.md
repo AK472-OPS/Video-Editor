@@ -1,6 +1,6 @@
 ## 🎮 Live Demo
 
-[click](https://ak472-ops.github.io/video-editor/)
+[click](https://AK472-OPS.github.io/Video-Editor/)
 
 
 # 🎬 Video Editor — Node.js, Cpeak, FFmpeg & Cluster
